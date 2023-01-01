@@ -6,21 +6,21 @@ import * as vscode from 'vscode';
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-	console.log('Loaded kristal.vscode-kristal');
+	console.log('Loaded kristal.kristal-vscode');
 
 	setLuaThirdParty(true);
 }
 
 // This method is called when your extension is deactivated
 export function deactivate() {
-	console.log('Unloaded kristal.vscode-kristal');
+	console.log('Unloaded kristal.kristal-vscode');
 
 	setLuaThirdParty(false);
 }
 
 
 function setLuaThirdParty(enable: boolean) {
-	const extensionId = "kristal.vscode-kristal"; // this id is case sensitive
+	const extensionId = "kristal.kristal-vscode"; // this id is case sensitive
 	const extensionPath = vscode.extensions.getExtension(extensionId)?.extensionPath;
 	const folderPath = extensionPath + path.sep + "3rd" + path.sep;
 	const config = vscode.workspace.getConfiguration("Lua", null);
