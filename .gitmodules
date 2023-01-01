@@ -1,4 +1,5 @@
 [submodule "3rd/kristal-lua-docs"]
 	path = 3rd/kristal-lua-docs
 	url = https://github.com/KristalTeam/kristal-lua-docs.git
+    branch = main
 	fetchRecurseSubmodules = false
