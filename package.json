@@ -4,7 +4,7 @@
   "description": "Additional VSCode support for Kristal",
   "author": "SylviBlossom",
   "publisher": "kristal",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "icon": "images/icon.png",
   "engines": {
     "vscode": "^1.74.0"
