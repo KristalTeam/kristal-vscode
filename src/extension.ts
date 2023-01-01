@@ -9,6 +9,7 @@ export function activate(context: vscode.ExtensionContext) {
 	console.log('Loaded kristal.kristal-vscode');
 
 	setLuaThirdParty(true);
+	fixLibraryPath();
 }
 
 // This method is called when your extension is deactivated
@@ -47,5 +48,39 @@ function setLuaThirdParty(enable: boolean) {
 			}
 		}
 		config.update("workspace.userThirdParty", library, true);
+	}
+}
+
+function fixLibraryPath() {
+	const extensionId = "kristal.kristal-vscode"; // this id is case sensitive
+	const extensionPath = vscode.extensions.getExtension(extensionId)?.extensionPath;
+	const config = vscode.workspace.getConfiguration("Lua", null);
+	const library: string[] | undefined = config.get("workspace.library");
+
+	if (library && extensionPath) {
+		const normalizedExtensionPath = extensionPath.replace(/\\/g, "/");
+		const folderPath = normalizedExtensionPath + "/3rd//kristal-lua-docs/library";
+		let foundOld = false;
+		let foundCurrent = false;
+		// remove any older versions of our path e.g. "publisher.name-0.0.1"
+		for (let i = library.length-1; i >= 0; i--) {
+			const el = library[i];
+			const isSelfExtension = el.indexOf(extensionId) > -1;
+			const isCurrentVersion = el.indexOf(normalizedExtensionPath) > -1;
+			if (isSelfExtension) {
+				if (isCurrentVersion) {
+					foundCurrent = true;
+				} else {
+					library.splice(i, 1);
+					foundOld = true;
+				}
+			}
+		}
+		if (foundOld) {
+			if (!foundCurrent) {
+				library.push(folderPath);
+			}
+			config.update("workspace.library", library, null);
+		}
 	}
 }
