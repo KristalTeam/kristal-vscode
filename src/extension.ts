@@ -31,10 +31,7 @@ function setLuaThirdParty(enable: boolean) {
 			const el = library[i];
 			const isSelfExtension = el.indexOf(extensionId) > -1;
 			const isCurrentVersion = el.indexOf(extensionPath) > -1;
-			if (isSelfExtension) {
-				if (isCurrentVersion) {
-					return;
-				}
+			if (isSelfExtension && !isCurrentVersion) {
 				library.splice(i, 1);
 			}
 		}
